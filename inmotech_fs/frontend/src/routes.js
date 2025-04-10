@@ -1,5 +1,6 @@
 import React from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
+import AuthForm from './pages/AuthForm';
 import Home from './pages/Home';
 import AboutUs from './pages/AboutUs';
 import Services from './pages/Services';
@@ -10,22 +11,79 @@ import ApartmentContent from './pages/ApartmentContent';
 import PublicationTools from './pages/PublicationTools';
 import Users from './pages/Users';
 import GestionUsuariosPlataforma from './pages/GestionUsuariosPlataforma';
-import GestionCarousel from './pages/GestionCarousel'; // Importa el nuevo componente
+import GestionCarousel from './pages/GestionCarousel';
+
+// Componente para proteger rutas
+const ProtectedRoute = ({ children }) => {
+  const token = localStorage.getItem('token');
+  if (!token) {
+    return <Navigate to="/" replace />;
+  }
+  return children;
+};
 
 function AppRouter() {
   return (
     <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="/about" element={<AboutUs />} />
-      <Route path="/services" element={<Services />} />
-      <Route path="/contact" element={<Contact />} />
-      <Route path="/portafolio" element={<Portfolio />} />
-      <Route path="/attention" element={<AttentionChannels />} />
-      <Route path="/apartment/:id" element={<ApartmentContent />} />
-      <Route path="/tools" element={<PublicationTools />} />
-      <Route path="/users" element={<Users />} />
-      <Route path="/gestion-usuarios-plataforma" element={<GestionUsuariosPlataforma />} />
-      <Route path="/gestion-carousel" element={<GestionCarousel />} /> {/* Agrega la nueva ruta */}
+      {/* Ruta pública para autenticación */}
+      <Route path="/" element={<AuthForm />} />
+      
+      {/* Rutas protegidas */}
+      <Route path="/home" element={
+        <ProtectedRoute>
+          <Home />
+        </ProtectedRoute>
+      } />
+      <Route path="/about" element={
+        <ProtectedRoute>
+          <AboutUs />
+        </ProtectedRoute>
+      } />
+      <Route path="/services" element={
+        <ProtectedRoute>
+          <Services />
+        </ProtectedRoute>
+      } />
+      <Route path="/contact" element={
+        <ProtectedRoute>
+          <Contact />
+        </ProtectedRoute>
+      } />
+      <Route path="/portafolio" element={
+        <ProtectedRoute>
+          <Portfolio />
+        </ProtectedRoute>
+      } />
+      <Route path="/attention" element={
+        <ProtectedRoute>
+          <AttentionChannels />
+        </ProtectedRoute>
+      } />
+      <Route path="/apartment/:id" element={
+        <ProtectedRoute>
+          <ApartmentContent />
+        </ProtectedRoute>
+      } />
+      <Route path="/tools" element={
+        <ProtectedRoute>
+          <PublicationTools />
+        </ProtectedRoute>
+      } />
+      <Route path="/users" element={
+        <ProtectedRoute>
+          <Users />
+        </ProtectedRoute>
+      } />
+      <Route path="/gestion-usuarios-plataforma" element={
+        <ProtectedRoute>
+          <GestionUsuariosPlataforma />
+        </ProtectedRoute>
+      } />
+      <Route path="/gestion-carousel" element={
+        <ProtectedRoute>
+          <GestionCarousel />
+        </ProtectedRoute>
+      } />
     </Routes>
   );
 }
