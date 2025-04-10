@@ -3,7 +3,7 @@ import { Navbar, Nav, Container } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { FaHome, FaInfoCircle, FaTools, FaNewspaper, FaEnvelope } from 'react-icons/fa';
 import logo from '../assets/images/logo/logo_200x200.png';
-import UserManager from './components/users/UserManager';
+import UserManager from '../components/users/UserManager';
 
 const Navigation = () => {
     return (
@@ -45,4 +45,4 @@ const Navigation = () => {
     );
 };
 
-export default Navigation; 
+export default Navigation;

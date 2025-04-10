@@ -1,30 +1,27 @@
 .home-container {
     min-height: 100vh;
     background-color: #f8f9fa;
+    margin: 0;
+    padding: 0;
 }
 
 .home-content {
-    padding: 3rem 0;
+    margin: 0;
+    padding: 0;
 }
 
-.home-title {
-    color: #0F1516;
-    font-size: 2.5rem;
-    font-weight: 700;
-    text-align: center;
-    margin-bottom: 1rem;
+.carousel-section {
+    margin-top: -24px; /* Aumentamos el valor negativo para subirlo más */
+    margin-bottom: 0;
+    padding: 0;
+    width: 100%;
+    position: relative;
+    z-index: 1; /* Aseguramos que esté por debajo de la navegación */
 }
 
-.home-subtitle {
-    color: #5B88B2;
-    font-size: 1.2rem;
-    text-align: center;
-    margin-bottom: 2rem;
-}
-
-/* Estilos para las tarjetas de características */
+/* Resto de los estilos para el contenido debajo del carousel */
 .features-row {
-    margin-bottom: 3rem;
+    margin-top: 2rem;
 }
 
 .feature-card {
@@ -183,4 +180,9 @@
     .action-section {
         padding: 3rem 0;
     }
-} 
+    
+    .carousel-section {
+        margin-top: -20px;
+        width: 100%;
+    }
+}

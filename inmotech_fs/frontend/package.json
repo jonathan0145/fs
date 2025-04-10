@@ -4,7 +4,7 @@
   "description": "parte visible de inmotech",
   "main": "index.js",
   "scripts": {
-    "start": "webpack serve --mode development --port 3001",
+    "start": "webpack serve --mode development --open",
     "build": "webpack --mode production",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
