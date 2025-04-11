@@ -6,6 +6,7 @@ import Testimonials from '../components/Testimonials';
 import FAQ from '../components/FAQ';
 import Footer from '../components/Footer';
 import '../styles/home.css';
+import api from '../services/api';
 
 function Home() {
   return (
@@ -25,3 +26,13 @@ function Home() {
 }
 
 export default Home;
+
+// Dentro de un useEffect o función
+const testConnection = async () => {
+    try {
+        const response = await api.get('/api/test');
+        console.log('Respuesta del backend:', response.data);
+    } catch (error) {
+        console.error('Error de conexión:', error);
+    }
+};

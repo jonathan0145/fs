@@ -1,0 +1,78 @@
+# InmoTech API Documentation
+
+## Base URL
+- http://localhost:3000/api
+
+## Authentication
+- **Authorization**: Bearer Token
+
+## Endpoints
+
+### Modules
+- **GET /modules**
+  - Description: Retrieve all modules.
+  - Authorization: Required
+
+- **POST /modules**
+  - Description: Create a new module.
+  - Authorization: Admin required
+  - Body Parameters:
+    - `nombre`: string, required
+    - `ruta`: string, optional
+    - `descripcion`: string, optional
+
+- **PUT /modules/:id**
+  - Description: Update an existing module.
+  - Authorization: Admin required
+  - URL Parameters:
+    - `id`: integer, required
+
+- **DELETE /modules/:id**
+  - Description: Delete a module.
+  - Authorization: Admin required
+  - URL Parameters:
+    - `id`: integer, required
+
+- **POST /modules/assign-role**
+  - Description: Assign a role to a module.
+  - Authorization: Admin required
+  - Body Parameters:
+    - `moduleId`: integer, required
+    - `roleId`: integer, required
+
+- **POST /modules/assign-permission**
+  - Description: Assign a permission to a module.
+  - Authorization: Admin required
+  - Body Parameters:
+    - `moduleRoleId`: integer, required
+    - `permitionId`: integer, required
+
+- **GET /modules/:moduleId/roles**
+  - Description: Retrieve roles for a module.
+  - Authorization: Required
+  - URL Parameters:
+    - `moduleId`: integer, required
+
+- **GET /modules/:moduleRoleId/permissions**
+  - Description: Retrieve permissions for a module role.
+  - Authorization: Required
+  - URL Parameters:
+    - `moduleRoleId`: integer, required
+
+- **DELETE /modules/remove-role**
+  - Description: Remove a role from a module.
+  - Authorization: Admin required
+  - Body Parameters:
+    - `moduleId`: integer, required
+    - `roleId`: integer, required
+
+- **DELETE /modules/remove-permission**
+  - Description: Remove a permission from a module role.
+  - Authorization: Admin required
+  - Body Parameters:
+    - `moduleRoleId`: integer, required
+    - `permitionId`: integer, required
+
+## Additional Information
+- Ensure all requests include the appropriate authorization headers.
+- For POST and PUT requests, ensure the body is in JSON format.

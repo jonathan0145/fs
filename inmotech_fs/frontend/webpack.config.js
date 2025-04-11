@@ -42,20 +42,9 @@ module.exports = {
             directory: path.join(__dirname, 'public'),
         },
         hot: true,
-        port: 3000,
-        historyApiFallback: true,
-    },
-    plugins: [
-        new webpack.HotModuleReplacementPlugin(),
-        new HtmlWebpackPlugin({
-            template: './index.html',
-            filename: 'index.html',
-        }),
-        new webpack.DefinePlugin({
-            'process.env': JSON.stringify(dotenv.config({ path: './.env.local' }).parsed),
-        }),
-    ],
-    resolve: {
-        extensions: ['.js', '.jsx'],
-    },
+        port: 8080, // Cambia el puerto del frontend a 8080
+        proxy: {
+            '/api': 'http://localhost:3001'
+        }
+    }
 };

@@ -8,7 +8,11 @@ const { errorHandler } = require('./middlewares/errorHandler');
 const app = express();
 
 // Middleware
-app.use(cors());
+// Actualizar la configuración CORS
+app.use(cors({
+    origin: 'http://localhost:8080', // Puerto donde corre tu frontend con webpack
+    credentials: true
+}));
 app.use(express.json());
 
 // Rutas
@@ -29,4 +33,9 @@ sequelize.sync()
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     console.log(`Servidor corriendo en puerto ${PORT}`);
+});
+
+// Agregar ruta de prueba
+app.get('/api/test', (req, res) => {
+    res.json({ message: 'Conexión exitosa con el backend' });
 });
