@@ -1,55 +1,21 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:3000';
+const API_URL = 'http://localhost:5000/api/auth';
 
 const authService = {
-    login: async (username, password) => {
-        try {
-            const response = await axios.post(`${API_URL}/auth/login`, {
-                User_user: username,
-                User_password: password
-            });
-            
-            if (response.data.token) {
-                localStorage.setItem('token', response.data.token);
-                localStorage.setItem('user', JSON.stringify(response.data.user));
-            }
-            
-            return response.data;
-        } catch (error) {
-            throw error.response?.data || { message: 'Error en el servidor' };
+    registro: async (userData) => {
+        const response = await axios.post(`${API_URL}/registro`, userData);
+        return response.data;
+    },
+    
+    login: async (credentials) => {
+        const response = await axios.post(`${API_URL}/login`, credentials);
+        if (response.data.token) {
+            localStorage.setItem('token', response.data.token);
+            localStorage.setItem('user', JSON.stringify(response.data.usuario));
         }
-    },
-
-    register: async (username, password) => {
-        try {
-            const response = await axios.post(`${API_URL}/auth/register`, {
-                User_user: username,
-                User_password: password
-            });
-            return response.data;
-        } catch (error) {
-            throw error.response?.data || { message: 'Error en el servidor' };
-        }
-    },
-
-    logout: () => {
-        localStorage.removeItem('token');
-        localStorage.removeItem('user');
-    },
-
-    getCurrentUser: () => {
-        const user = localStorage.getItem('user');
-        return user ? JSON.parse(user) : null;
-    },
-
-    getToken: () => {
-        return localStorage.getItem('token');
-    },
-
-    isAuthenticated: () => {
-        return !!localStorage.getItem('token');
+        return response.data;
     }
 };
 
-export default authService; 
+export default authService;
