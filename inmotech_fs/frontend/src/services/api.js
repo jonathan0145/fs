@@ -1,4 +1,5 @@
 import axios from 'axios';
+<<<<<<< HEAD
 import { REACT_APP_API_BASE_URL } from '../utils/constants';
 
 const api = axios.create({
@@ -6,12 +7,24 @@ const api = axios.create({
 });
 
 // Interceptor para incluir el token en las peticiones
+=======
+
+const api = axios.create({
+    baseURL: 'http://localhost:3000',
+    headers: {
+        'Content-Type': 'application/json'
+    }
+});
+
+// Interceptor para agregar el token a las solicitudes
+>>>>>>> 4d5d530d25248b77ac1329c9afb0e3789ebe84a9
 api.interceptors.request.use((config) => {
     const token = localStorage.getItem('token');
     if (token) {
         config.headers.Authorization = `Bearer ${token}`;
     }
     return config;
+<<<<<<< HEAD
 });
 
 export const authService = {
@@ -33,4 +46,10 @@ export const visualizationService = {
     getStats: (params) => api.get('/visualizations/estadisticas', { params })
 };
 
+=======
+}, (error) => {
+    return Promise.reject(error);
+});
+
+>>>>>>> 4d5d530d25248b77ac1329c9afb0e3789ebe84a9
 export default api;

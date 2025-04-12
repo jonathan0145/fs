@@ -1,12 +1,62 @@
+<<<<<<< HEAD
 footer {
     margin-top: auto;
 }
 
 footer a {
+=======
+.footer {
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('../assets/images/tarjeta3.webp');
+    background-size: cover;
+    background-position: center;
+    color: white;
+    padding: 1rem 0;
+    width: 100%;
+    position: relative;
+}
+
+.footer::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.6);
+    pointer-events: none;
+}
+
+.footer-content {
+    position: relative;
+    z-index: 1;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 1rem;
+}
+
+.footer-disclaimer {
+    position: relative;
+    z-index: 1;
+}
+
+.footer-right {
+    display: flex;
+    gap: 2rem;
+}
+
+.footer-right a {
+    color: white;
+>>>>>>> 4d5d530d25248b77ac1329c9afb0e3789ebe84a9
     text-decoration: none;
     transition: color 0.3s ease;
 }
 
+<<<<<<< HEAD
 footer a:hover {
     color: #007bff !important;
 }
@@ -18,4 +68,30 @@ footer a:hover {
 
 footer ul li {
     margin-bottom: 0.5rem;
+=======
+.footer-right a:hover {
+    color: #007bff;
+}
+
+.footer-disclaimer {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1rem;
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.7);
+    text-align: center;
+}
+
+@media (max-width: 768px) {
+    .footer-content {
+        flex-direction: column;
+        gap: 1rem;
+        text-align: center;
+    }
+
+    .footer-right {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+>>>>>>> 4d5d530d25248b77ac1329c9afb0e3789ebe84a9
 }

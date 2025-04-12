@@ -1,0 +1,72 @@
+.property-menu {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 0 15px;
+    display: grid;
+    gap: 20px;
+}
+
+.property-menu-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.property-menu-item {
+    position: relative;
+    height: 200px;
+    border-radius: 10px;
+    overflow: hidden;
+    text-decoration: none;
+    background-size: cover;
+    background-position: center;
+    transition: all 0.5s ease;
+}
+
+.property-menu-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.menu-content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.3s ease;
+}
+
+.property-menu-item:hover .menu-content {
+    background: rgba(0, 0, 0, 0.2);
+}
+
+.property-menu-item h3 {
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    transform: translateY(0);
+    transition: transform 0.3s ease, text-shadow 0.3s ease;
+}
+
+.property-menu-item:hover h3 {
+    transform: translateY(-5px);
+    text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.7);
+}
+
+.property-menu-item.full-width {
+    grid-column: 1 / -1;
+    height: 150px;
+}
+
+@media (max-width: 768px) {
+    .property-menu-row {
+        grid-template-columns: 1fr;
+    }
+}

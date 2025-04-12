@@ -1,96 +1,93 @@
-const Usuario = require('../models/Usuario');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
+const User = require('../models/User');
 
 exports.login = async (req, res) => {
     try {
-        console.log('Recibida petición de login:', req.body);
-        const { User_user, User_password } = req.body;
+        const { email, password } = req.body;
 
-        if (!User_user || !User_password) {
-            console.log('Faltan datos requeridos en login');
-            return res.status(400).json({ message: 'Usuario y contraseña son requeridos' });
+        // Validar campos requeridos
+        if (!email || !password) {
+            return res.status(400).json({
+                message: 'Email y contraseña son requeridos'
+            });
         }
-        
+
         // Buscar usuario
-        const usuario = await Usuario.findOne({ where: { User_user } });
-        console.log('Usuario encontrado:', usuario ? 'Sí' : 'No');
-        
-        if (!usuario) {
-            return res.status(401).json({ message: 'Usuario no encontrado' });
+        const user = await User.findOne({ where: { email } });
+        if (!user) {
+            return res.status(401).json({
+                message: 'Credenciales inválidas'
+            });
         }
 
         // Verificar contraseña
-        const validPassword = await bcrypt.compare(User_password, usuario.User_password);
-        console.log('Contraseña válida:', validPassword ? 'Sí' : 'No');
-        
-        if (!validPassword) {
-            return res.status(401).json({ message: 'Contraseña incorrecta' });
+        const isValidPassword = await bcrypt.compare(password, user.password);
+        if (!isValidPassword) {
+            return res.status(401).json({
+                message: 'Credenciales inválidas'
+            });
         }
 
         // Generar token
         const token = jwt.sign(
-            { id: usuario.id, username: usuario.User_user },
-            process.env.JWT_SECRET || 'your-secret-key',
+            { id: user.id, email: user.email },
+            process.env.JWT_SECRET,
             { expiresIn: '24h' }
         );
 
-        console.log('Login exitoso para usuario:', User_user);
         res.json({
             token,
             user: {
-                id: usuario.id,
-                username: usuario.User_user
+                id: user.id,
+                email: user.email,
+                nombre: user.nombre
             }
         });
     } catch (error) {
-        console.error('Error detallado en login:', error);
-        res.status(500).json({ 
-            message: 'Error en el servidor',
-            error: error.message 
-        });
+        console.error('Error en login:', error);
+        res.status(500).json({ message: 'Error en el servidor' });
     }
 };
 
 exports.register = async (req, res) => {
     try {
-        console.log('Recibida petición de registro:', req.body);
-        const { User_user, User_password } = req.body;
-
-        if (!User_user || !User_password) {
-            console.log('Faltan datos requeridos');
-            return res.status(400).json({ message: 'Usuario y contraseña son requeridos' });
-        }
-
-        // Verificar si el usuario ya existe
-        const existingUser = await Usuario.findOne({ where: { User_user } });
-        if (existingUser) {
-            console.log('Usuario ya existe:', User_user);
-            return res.status(400).json({ message: 'El usuario ya existe' });
-        }
-
-        // Hashear la contraseña
-        const hashedPassword = await bcrypt.hash(User_password, 10);
+        const { nombre, apellido, email, password } = req.body;
         
+        // Verificar si el usuario ya existe
+        const existingUser = await User.findOne({ where: { email } });
+        if (existingUser) {
+            return res.status(400).json({ message: 'El email ya está registrado' });
+        }
+
+        // Encriptar contraseña
+        const hashedPassword = await bcrypt.hash(password, 10);
+
         // Crear nuevo usuario
-        const usuario = await Usuario.create({
-            User_user,
-            User_password: hashedPassword
+        const user = await User.create({
+            nombre,
+            apellido,
+            email,
+            password: hashedPassword
         });
 
-        console.log('Usuario creado exitosamente:', usuario.id);
-        res.status(201).json({ 
-            message: 'Usuario registrado exitosamente',
+        // Generar token
+        const token = jwt.sign(
+            { id: user.id, email: user.email },
+            process.env.JWT_SECRET,
+            { expiresIn: '24h' }
+        );
+
+        res.status(201).json({
+            token,
             user: {
-                id: usuario.id,
-                username: usuario.User_user
+                id: user.id,
+                email: user.email,
+                nombre: user.nombre
             }
         });
     } catch (error) {
-        console.error('Error detallado en registro:', error);
-        res.status(500).json({ 
-            message: 'Error en el servidor',
-            error: error.message 
-        });
+        console.error('Error en registro:', error);
+        res.status(500).json({ message: 'Error en el servidor' });
     }
-}; 
+};
